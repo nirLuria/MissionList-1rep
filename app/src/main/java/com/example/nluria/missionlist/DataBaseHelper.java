@@ -81,22 +81,19 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
 
 
-        //check if the title of the group is already exist.
-        String countQuery = ( "SELECT count(*) FROM " +TableGroup  );
+        //check if the title of the group is already exists.
+        String countQuery = ( "select count(*) from "+TableGroup+" where TITLE='" + title  + "'; " );
         Cursor mcursor = db.rawQuery(countQuery, null);
         mcursor.moveToFirst();
-        int count = mcursor.getInt(0);
-        System.out.println("count of table is " +count);
+        int countOfCurrentTitle = mcursor.getInt(0);
 
-      //  int count= db.("SELECT count(*) FROM " + TableGroup +"WHERE TITLE = '"+ title +"';" );
-
-        if (TableGroup.contains(title))
+        if (countOfCurrentTitle>0)
         {
             System.out.println(title+ " is already exist");
             return false;
         }
 
-
+        //add the new group.
         contentValues.put(gTcol2, title);
         long result = db.insert(TableGroup , null,contentValues );
         if (result== -1)
