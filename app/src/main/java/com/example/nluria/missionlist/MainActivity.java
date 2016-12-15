@@ -4,9 +4,12 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -26,21 +29,42 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActionBar ab = getSupportActionBar();
+        ab.setLogo(R.drawable.logo);
+        ab.setDisplayUseLogoEnabled(true);
+        ab.setDisplayHomeAsUpEnabled(true);         //   <- option
+        ab.setDisplayShowHomeEnabled(true);
+
         exitButtonClickListener();
-
-    //    view_groups_button= (Button)findViewById(R.id.View_groupsButton);
-
         newGroupClickListener();
-
         viewGroupsClickListener();
 
         myDb = new DataBaseHelper(this);
 
-      //  viewAll();
+
+    }
+
+/*
+    //2 methods for displaying action bar.
+    public boolean onCreateOptionsMenu(Menu menu)
+    {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
     }
 
 
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        int id= item.getItemId();
+        if (id==R.id.action_settings)
+        {
+            return true;
+        }
 
+        return super.onOptionsItemSelected(item);
+    }
+*/
 
     //exit.
     public void exitButtonClickListener()

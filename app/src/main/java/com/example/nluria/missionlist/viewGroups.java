@@ -72,7 +72,35 @@ public class viewGroups extends AppCompatActivity
         //when user press - delete group.
         listView.setOnItemClickListener
         (
-                new AdapterView.OnItemClickListener() {
+                new AdapterView.OnItemClickListener()
+                {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
+                    {
+                        //String value = (String)listView.getItemAtPosition(position);
+                        stringToDelete= (String)listView.getItemAtPosition(position);
+                       // Toast.makeText(viewGroups.this, "i want to delete " + value + ", position: " + position,
+                         //       Toast.LENGTH_LONG).show();
+
+                        AlertDialog.Builder alert_builder = new AlertDialog.Builder(viewGroups.this);
+                        alert_builder.setMessage("test");
+                        AlertDialog alert = alert_builder.create();
+                        alert.setTitle("hi");
+                        alert.show();
+                    }
+                }
+
+
+
+
+        );
+    }
+
+
+
+    /*
+    new AdapterView.OnItemClickListener()
+                {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
                     {
@@ -105,13 +133,11 @@ public class viewGroups extends AppCompatActivity
                                     }
                                 });
                         AlertDialog alert = alert_builder.create();
-                        alert.setTitle("Exit?");
+                        alert.setTitle("Delete?");
                         alert.show();
                     }
                 }
-        );
-    }
-
+     */
 
 
     //delete all group.

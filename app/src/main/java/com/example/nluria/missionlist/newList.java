@@ -27,7 +27,8 @@ public class newList extends AppCompatActivity {
         addNewList();
     }
 
-//test
+
+
     public void addNewList()
     {
         btnAddList.setOnClickListener(
