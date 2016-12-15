@@ -9,9 +9,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -45,26 +47,29 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-/*
-    //2 methods for displaying action bar.
+
+    //displaying options menu bar.
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_main_activity, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-
+    //the menu bar itself.
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        int id= item.getItemId();
-        if (id==R.id.action_settings)
+        switch(item.getItemId())
         {
-            return true;
+            case R.id.info_id:
+                Toast.makeText(getApplicationContext(), "info icon is selected", Toast.LENGTH_SHORT).show();
+            case R.id.action_settings:
+                Toast.makeText(getApplicationContext(), "setting icon is selected", Toast.LENGTH_SHORT).show();
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
-*/
+
 
     //exit.
     public void exitButtonClickListener()
