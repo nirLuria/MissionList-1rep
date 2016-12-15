@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Mission List</string>
+    <string name="title_activity_group_tasks_list">group_tasks_list</string>
 </resources>
