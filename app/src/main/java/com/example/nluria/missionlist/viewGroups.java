@@ -77,18 +77,15 @@ public class viewGroups extends AppCompatActivity
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
                     {
                         Intent intent = new Intent("com.example.nluria.missionlist.tasks");
+
+                        //pass the name of the group to the next activity.
+                        String value = (String)listView.getItemAtPosition(position);
+                        intent.putExtra("name", value);
                         startActivity(intent);
                     }
                 }
         );
     }
-
-
-
-    /*
-
-
-     */
 
 
 
