@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class tasks extends AppCompatActivity
@@ -23,6 +24,9 @@ public class tasks extends AppCompatActivity
 
         Intent intent = getIntent();
         nameOfGroup= intent.getStringExtra("name");
+        TextView title= (TextView) findViewById(R.id.title);
+        title.setText(nameOfGroup);
+
         btnAddTask = (Button)findViewById(R.id.Add_btn);
         addNewTask();
 
