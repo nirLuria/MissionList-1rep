@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 public class tasks extends AppCompatActivity
 {
+    DataBaseHelper myDb;
     String nameOfGroup;
     Button btnAddTask;
     EditText input;
@@ -21,6 +22,7 @@ public class tasks extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
+        myDb = new DataBaseHelper(this);
 
         //print title of group on screen.
         Intent intent = getIntent();
@@ -28,10 +30,10 @@ public class tasks extends AppCompatActivity
         TextView title= (TextView) findViewById(R.id.title);
         title.setText(nameOfGroup);
 
-        addTask();
+        addNewTask();
     }
 
-    public void addTask()
+    public void addNewTask()
     {
         //create alert dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -51,8 +53,42 @@ public class tasks extends AppCompatActivity
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                String txt = input.getText().toString();
-                Toast.makeText(getApplicationContext(),txt, Toast.LENGTH_LONG).show();
+                //String txt = input.getText().toString();
+                //Toast.makeText(getApplicationContext(),txt, Toast.LENGTH_LONG).show();
+
+                boolean isInserted = myDb.insertNewTask(input.getText().toString(),nameOfGroup);
+                System.out.println(" isInserted is: " + isInserted);
+
+                if (isInserted == true)
+                {
+                    Toast.makeText(tasks.this, "New task inserted successfully", Toast.LENGTH_LONG).show();
+                    finish();
+                }
+                else
+                {
+                    Toast.makeText(tasks.this, "Baddddddd", Toast.LENGTH_LONG).show();
+                    finish();
+                    /*
+                    AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
+                    alert_builder.setMessage("Please choose another name.")
+                            .setCancelable(false)
+                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialogInterface.cancel();
+                                }
+                            });
+                    AlertDialog alert = alert_builder.create();
+                    alert.setTitle("This title name is already exists!");
+                    alert.show();
+                    */
+
+                }
+                //    Toast.makeText(newList.this, "This title name is already exist! " +
+                //          "Please choose another name.", Toast.LENGTH_LONG).show();
+
+
+
                 input.setText("");
             }
         });
