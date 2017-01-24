@@ -175,18 +175,14 @@ public class DataBaseHelper extends SQLiteOpenHelper
     }
 
 
+
     public boolean deleteAllGroups()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        //db.execSQL("DELETE FROM " + TableGroup +";"   );
-        // + "WHERE" + gTcol2 + "=\'"+ title +"\';"
         db.execSQL("DROP TABLE IF EXISTS " + TableGroup);
 
         //create a new clean table.
         db.execSQL("Create table "+ TableGroup +" (ID INTEGER PRIMARY KEY AUTOINCREMENT , TITLE TEXT) ");
-
-    //    if (db.delete(TableGroup, "TITLE = ?", new String[] {title})>0)
-      //      return true;
 
         //delete also all the tasks.
         deleteAllTasks();
@@ -204,6 +200,16 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
         return true;
     }
+
+
+    public boolean deleteAllTasksOfGroup(String group)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TableTasks + "  where BELONGS_TO_GROUP='" + group + "'; " );
+
+        return true;
+    }
+
 
     public Cursor getGroups()
     {

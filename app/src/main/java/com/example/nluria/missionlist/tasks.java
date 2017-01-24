@@ -15,12 +15,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class tasks extends AppCompatActivity
 {
     DataBaseHelper myDb;
     String nameOfGroup;
     Button btnAddTask;
     EditText input;
+    List<String> tasksArray = new ArrayList<String>();
+    private static ListView listView;
+    private static Button delete_tasks_button;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +42,51 @@ public class tasks extends AppCompatActivity
         title.setText(nameOfGroup);
 
         addNewTask();
-        groupsView();
+        tasksView();
+        deleteTasksOfGroupClickListener();
     }
+
+
+
+    public void deleteTasksOfGroupClickListener()
+    {
+
+        delete_tasks_button = (Button)findViewById(R.id.delete_tasks_btn);
+        delete_tasks_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
+                alert_builder.setMessage("Do you realy want to delete all tasks?")
+                        .setCancelable(false)
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //delete all groups.
+                                boolean isDeleted = myDb.deleteAllTasksOfGroup(nameOfGroup);
+                                if (isDeleted == true) {
+                                    Toast.makeText(tasks.this, "Tasks of " + nameOfGroup + " have been deleted successfully", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(tasks.this, "didn't deleted", Toast.LENGTH_LONG).show();
+                                }
+                                finish();
+                            }
+                        });
+                AlertDialog alert = alert_builder.create();
+                alert.setTitle("Delete all?");
+                alert.show();
+
+            }
+        });
+    }
+
 
     public void addNewTask()
     {
@@ -112,21 +162,46 @@ public class tasks extends AppCompatActivity
     }
 
 
+    //show the data in an openned windows.
+    //print to screen the groups.
+    public void showMessage(String title, String message)
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(message);
+        builder.show();
 
-    public void groupsView()
+    }
+
+    public void tasksView()
     {
         Cursor res = myDb.getTasks(nameOfGroup);
         if (res.getCount()==0)
         {
             System.out.println(" no tasks");
 
+            return;
         }
         else
         {
             System.out.println(" i have tasks!");
+            StringBuffer buffer = new StringBuffer();
+            int number=1;
 
+            //  ###print to screen the database data.        ###
+            while (res.moveToNext())
+            {
+                buffer.append(number+". " + res.getString(1) + "\n");
+                System.out.println(res.getString(1));
+                tasksArray.add(res.getString(1));
+                number++;
+            }
+
+
+            showMessage("My currently tasks:", buffer.toString());
         }
-    }
 
+    }
 
 }
