@@ -2,12 +2,16 @@ package com.example.nluria.missionlist;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +35,7 @@ public class tasks extends AppCompatActivity
         title.setText(nameOfGroup);
 
         addNewTask();
+        groupsView();
     }
 
     public void addNewTask()
@@ -62,12 +67,12 @@ public class tasks extends AppCompatActivity
                 if (isInserted == true)
                 {
                     Toast.makeText(tasks.this, "New task inserted successfully", Toast.LENGTH_LONG).show();
-                    finish();
+        //            finish();
                 }
                 else
                 {
                     Toast.makeText(tasks.this, "Baddddddd", Toast.LENGTH_LONG).show();
-                    finish();
+              ///      finish();
                     /*
                     AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
                     alert_builder.setMessage("Please choose another name.")
@@ -105,5 +110,23 @@ public class tasks extends AppCompatActivity
             }
         });
     }
+
+
+
+    public void groupsView()
+    {
+        Cursor res = myDb.getTasks(nameOfGroup);
+        if (res.getCount()==0)
+        {
+            System.out.println(" no tasks");
+
+        }
+        else
+        {
+            System.out.println(" i have tasks!");
+
+        }
+    }
+
 
 }

@@ -57,10 +57,9 @@ public class DataBaseHelper extends SQLiteOpenHelper
         //create new tables.
         db.execSQL("Create table "+ TableGroup +" (NAME TEXT PRIMARY KEY AUTOINCREMENT , TITLE TEXT) ");
     //    db.execSQL("Create table "+ TablePeople +" (ID INTEGER PRIMARY KEY , NAME TEXT) ");
-        db.execSQL("Create table "+ TableTasks +" (BELONGS_TO_GROUP TEXT PRIMARY KEY  , DATA TEXT) ");
+        db.execSQL("Create table "+ TableTasks +" (BELONGS_TO_GROUP TEXT , DATA TEXT, COUNT INTEGER PRIMARY KEY AUTOINCREMENT) ");
         System.out.println("created clean database");
-
-    }
+     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -117,13 +116,14 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
     public boolean insertNewTask(String data, String group)
     {
+        System.out.println("GROUP IS: " + group);
+        System.out.println("DATA IS: " + data);
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         //check if the task of the group is already exists.
-        String countQuery = ( "select count(*) from "+TableTasks+" where DATA='" + data  + "'; " );
-     //   String countQuery = ( "select count(*) from "+TableTasks+" where DATA='" + data  + "' and BELONGS_TO_GROUP='" + group  + "'; " );
+        String countQuery = ( "select count(*) from "+TableTasks+" where BELONGS_TO_GROUP='" + group + "' and DATA='" + data + "'; " );
 
         Cursor mcursor = db.rawQuery(countQuery, null);
         mcursor.moveToFirst();
@@ -136,10 +136,12 @@ public class DataBaseHelper extends SQLiteOpenHelper
         }
 
         //add the new task.
-    ///    contentValues.put(tTcol1, group);
+        contentValues.put(tTcol1, group);
         contentValues.put(tTcol2, data);
         long result = db.insert(TableTasks , null,contentValues );
 
+
+        /*
         //test
         String countQuery23 = ( "select count(*) from "+TableTasks  + "; " );
         Cursor mcursor32 = db.rawQuery(countQuery23, null);
@@ -147,10 +149,10 @@ public class DataBaseHelper extends SQLiteOpenHelper
         int countOfCurrentTitle23 = mcursor32.getInt(0);
         System.out.println("count of tasks:" + countOfCurrentTitle23);
 
-     ///   deleteAllTasks();
+       /// deleteAllTasks();
 
         //until here
-
+*/
 
 
         if (result== -1)
@@ -185,21 +187,21 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
     //    if (db.delete(TableGroup, "TITLE = ?", new String[] {title})>0)
       //      return true;
+
+        //delete also all the tasks.
+        deleteAllTasks();
+
         return true;
     }
 
     public boolean deleteAllTasks()
     {
         SQLiteDatabase db = this.getWritableDatabase();
-        //db.execSQL("DELETE FROM " + TableGroup +";"   );
-        // + "WHERE" + gTcol2 + "=\'"+ title +"\';"
         db.execSQL("DROP TABLE IF EXISTS " + TableTasks);
 
         //create a new clean table.
-        db.execSQL("Create table "+ TableTasks +" (BELONGS_TO_GROUP TEXT PRIMARY KEY  , DATA TEXT) ");
+        db.execSQL("Create table "+ TableTasks +" (BELONGS_TO_GROUP TEXT , DATA TEXT, COUNT INTEGER PRIMARY KEY AUTOINCREMENT) ");
 
-        //    if (db.delete(TableGroup, "TITLE = ?", new String[] {title})>0)
-        //      return true;
         return true;
     }
 
@@ -210,6 +212,13 @@ public class DataBaseHelper extends SQLiteOpenHelper
         return res;
     }
 
+
+    public Cursor getTasks(String group)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TableTasks+" where BELONGS_TO_GROUP='" + group + "'; ", null);
+        return res;
+    }
 
 
 }
