@@ -65,7 +65,7 @@ public class viewGroups extends AppCompatActivity
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.list_of_groups, groupsArray );
         listView.setAdapter(adapter);
 
-        //show tasks of group.
+        //go to tasks of group.
         listView.setOnItemClickListener
         (
                 new AdapterView.OnItemClickListener()
@@ -73,12 +73,49 @@ public class viewGroups extends AppCompatActivity
                       @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, int position, long l)
                     {
-                        Intent intent = new Intent("com.example.nluria.missionlist.tasks");
+                        final int p=position;
+                        AlertDialog.Builder builder = new AlertDialog.Builder(viewGroups.this);
 
-                        //pass the name of the group to the next activity.
-                        String value = (String)listView.getItemAtPosition(position);
-                        intent.putExtra("name", value);
-                        startActivity(intent);
+                        builder.setTitle("Title");
+                        builder.setItems(new CharSequence[]
+                                        {"Cancel", "watch tasks", "delete"},
+                                new DialogInterface.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialogInterface, int which)
+                                    {
+                                        // The 'which' argument contains the index position
+                                        // of the selected item
+                                        switch (which) {
+                                            case 0:
+                                            {
+                                                Toast.makeText(viewGroups.this, "clicked 1", Toast.LENGTH_LONG).show();
+                                                System.out.println("cancel me");
+                                                dialogInterface.cancel();
+                                                break;
+                                            }
+                                            case 1:
+                                                Intent intent = new Intent("com.example.nluria.missionlist.tasks");
+
+                                                //pass the name of the group to the next activity.
+                                                String value = (String)listView.getItemAtPosition(p);
+                                                intent.putExtra("name", value);
+                                                startActivity(intent);
+                                                break;
+                                            case 2:
+                                                Toast.makeText(viewGroups.this, "i want to delete", Toast.LENGTH_LONG).show();
+                                                break;
+
+                                        }
+                                    }
+                                });
+                        builder.create().show();
+
+
+                        AlertDialog alert = builder.create();
+                        alert.setTitle("Menu");
+                        alert.show();
+
+
                     }
                 }
         );
