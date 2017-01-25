@@ -60,9 +60,6 @@ public class newList extends AppCompatActivity {
                             alert.show();
 
                         }
-                        //    Toast.makeText(newList.this, "This title name is already exist! " +
-                          //          "Please choose another name.", Toast.LENGTH_LONG).show();
-
                     }
                 }
         );

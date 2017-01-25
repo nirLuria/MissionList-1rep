@@ -25,20 +25,17 @@ public class viewGroups extends AppCompatActivity
     private static Button delete_groups_button;
     DataBaseHelper myDb;
 
-    private String stringToDelete;
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_groups);
         myDb = new DataBaseHelper(this);
 
+        //execute methods.
         groupsView();
         deleteAllGroupsClickListener();
-        //  viewGroupsClickListener();
-     //   viewGroupsByOpenedWin();
     }
-
 
 
     public void groupsView()
@@ -184,27 +181,7 @@ public class viewGroups extends AppCompatActivity
  */
 
 
-
-
-
-
-    //show the data in an openned windows.  for now - not used!!!!!
-    public void viewGroupsClickListener()
-    {
-
-           //view_groups_button= (Button)findViewById(R.id.View_groupsButton);
-        view_groups_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent("com.example.nluria.missionlist.viewGroups");
-                startActivity(intent);
-            }
-        });
-    }
-
-
-
-    //show the data in an openned windows.  for now - not used!!!!!
+    //show the data in an openned windows.
     //print to screen the groups.
     public void showMessage(String title, String message)
     {
@@ -217,43 +194,5 @@ public class viewGroups extends AppCompatActivity
     }
 
 
-    //show the data in an openned windows.  for now - not used!!!!!
-    //save in a buffer all the groups of tasks. execute showMessage.
-    public void viewGroupsByOpenedWin()
-    {
-        view_groups_button.setOnClickListener
-                (
-                        new View.OnClickListener()
-                        {
-
-                            @SuppressLint("NewApi")
-                            @Override
-                            public void onClick(View v)
-                            {
-                                Cursor res = myDb.getGroups();
-                                if (res.getCount()==0)
-                                {
-                                    //no data.
-                                    showMessage("Error:", "no data");
-                                    return;
-                                }
-                                StringBuffer buffer = new StringBuffer();
-                                int number=1;
-
-                                //  ###print to screen the database data.        ###
-                                while (res.moveToNext())
-                                {
-                                    buffer.append(number+". " + res.getString(1) + "\n");
-                                    System.out.println(res.getString(1));
-                                    number++;
-                                }
-                                //  ###                                         ###
-
-                                showMessage("My currently groups:", buffer.toString());
-                            }
-
-                        }
-                );
-    }
 
 }

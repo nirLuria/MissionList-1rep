@@ -6,22 +6,16 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class tasks extends AppCompatActivity
@@ -31,13 +25,8 @@ public class tasks extends AppCompatActivity
     Button btnAddTask;
     EditText input;
     List<String> tasksArray = new ArrayList<String>();
-    private static ListView listView;
     private static Button delete_tasks_button;
-    String[] items;
-    ArrayList<String> listItems;
-    ArrayAdapter<String> adapter;
-    ListView newListView;
-    EditText editText;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +46,13 @@ public class tasks extends AppCompatActivity
      }
 
 
-
     public void deleteTasksOfGroupClickListener()
     {
-
         delete_tasks_button = (Button)findViewById(R.id.delete_tasks_btn);
         delete_tasks_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-
-
+            public void onClick(View view)
+            {
                 AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
                 alert_builder.setMessage("Do you realy want to delete all tasks?")
                         .setCancelable(false)
@@ -116,10 +102,8 @@ public class tasks extends AppCompatActivity
         //set positive button.
         builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                //String txt = input.getText().toString();
-                //Toast.makeText(getApplicationContext(),txt, Toast.LENGTH_LONG).show();
-
+            public void onClick(DialogInterface dialogInterface, int i)
+            {
                 boolean isInserted = myDb.insertNewTask(input.getText().toString(),nameOfGroup);
                 System.out.println(" isInserted is: " + isInserted);
 
@@ -131,28 +115,8 @@ public class tasks extends AppCompatActivity
                 else
                 {
                     Toast.makeText(tasks.this, "Baddddddd", Toast.LENGTH_LONG).show();
-              ///      finish();
-                    /*
-                    AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
-                    alert_builder.setMessage("Please choose another name.")
-                            .setCancelable(false)
-                            .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    dialogInterface.cancel();
-                                }
-                            });
-                    AlertDialog alert = alert_builder.create();
-                    alert.setTitle("This title name is already exists!");
-                    alert.show();
-                    */
 
                 }
-                //    Toast.makeText(newList.this, "This title name is already exist! " +
-                //          "Please choose another name.", Toast.LENGTH_LONG).show();
-
-
-
                 input.setText("");
             }
         });
@@ -180,7 +144,6 @@ public class tasks extends AppCompatActivity
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
-
     }
 
     public void tasksView()
@@ -199,7 +162,6 @@ public class tasks extends AppCompatActivity
             int number=1;
 
             TableLayout table = (TableLayout)findViewById(R.id.table_for_buttons);
-
 
             //  ###print to screen the database data.        ###
             while (res.moveToNext())
@@ -248,7 +210,6 @@ public class tasks extends AppCompatActivity
                                         else
                                         {
                                             System.out.println(str + "was not deleted");
-
                                         }
                                      //   finish();
                                     }
@@ -260,7 +221,6 @@ public class tasks extends AppCompatActivity
                 });
                 tableRow.addView(button);
             }
-        //    showMessage("My currently tasks:", buffer.toString());
         }
     }
 

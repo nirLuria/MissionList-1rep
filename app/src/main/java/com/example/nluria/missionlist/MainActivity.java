@@ -1,9 +1,7 @@
 package com.example.nluria.missionlist;
 
-import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,38 +15,33 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    DataBaseHelper myDb;
-
-
+    private static DataBaseHelper myDb;
     private static Button exit_button;
     private static Button view_groups_button;
     private static Button new_list_button;
 
-  //  private static Button newView_groups_button;
-
-
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ActionBar ab = getSupportActionBar();
-        ab.setLogo(R.drawable.logo);
-        ab.setDisplayUseLogoEnabled(true);
-        ab.setDisplayHomeAsUpEnabled(true);         //   <- option
-        ab.setDisplayShowHomeEnabled(true);
+        ActionBar ab = getSupportActionBar();        //
+        ab.setLogo(R.drawable.logo);                 //
+        ab.setDisplayUseLogoEnabled(true);           //     <- option bar.
+        ab.setDisplayHomeAsUpEnabled(true);          //
+        ab.setDisplayShowHomeEnabled(true);          //
 
+        //execute methods.
         exitButtonClickListener();
         newGroupClickListener();
         viewGroupsClickListener();
 
         myDb = new DataBaseHelper(this);
-
-
     }
 
 
-    //displaying options menu bar.
+    //display options menu bar.
     public boolean onCreateOptionsMenu(Menu menu)
     {
         MenuInflater menuInflater = getMenuInflater();
@@ -102,40 +95,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-/*
-    //save in a buffer all the groups of tasks. execute showMessage.
-    public void viewAll()
-    {
-        view_groups_button.setOnClickListener
-        (
-                new View.OnClickListener()
-                {
-                    @SuppressLint("NewApi")
-                    @Override
-                    public void onClick(View v) {
-                        Cursor res = myDb.getGroups();
-                        if (res.getCount()==0)
-                        {
-                            //no data.
-                            showMessage("Error:", "no data");
-                            return;
-                        }
-                        StringBuffer buffer = new StringBuffer();
-                        int number=1;
-                        while (res.moveToNext())
-                        {
-                            buffer.append(number+". " + res.getString(1) + "\n");
-                            number++;
-                        }
-
-                        showMessage("My currently groups:", buffer.toString());
-                    }
-
-                }
-        );
-    }
-*/
-
     //print to screen the groups.
     public void showMessage(String title, String message)
     {
@@ -144,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
         builder.setTitle(title);
         builder.setMessage(message);
         builder.show();
-
      }
 
     public void newGroupClickListener()
@@ -174,7 +132,5 @@ public class MainActivity extends AppCompatActivity {
                 }
         );
     }
-
-
 
 }

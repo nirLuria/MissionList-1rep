@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.Settings;
+
 
 /**
  * Created by nluria on 10/6/2016.
@@ -32,31 +32,15 @@ public class DataBaseHelper extends SQLiteOpenHelper
     public static final String tTcol2= "DATA";
 
 
-    //SQL creation strings.
-   /* private static final String SQL_CREATE_TABLE_PEOPLE = "CREATE TABLE " + TablePeople + "("
-            + pTcol1 + "INTEGER PRIMARY KEY, "
-            + pTcol2 + "TEXT NOT NULL "
-            +");";
-
-    private static final String SQL_CREATE_TABLE_TASKS = "CREATE TABLE " + TableTasks + "("
-            + tTcol1 + "INTEGER PRIMARY KEY, "
-            + tTcol2 + "TEXT NOT NULL "
-            +");";
-
-
-*/
-
-
-    public DataBaseHelper(Context context)  {
+    public DataBaseHelper(Context context)
+    {
         super(context, DATABASE_NAME, null, 1);
-        //SQLiteDatabase db = this.getWritableDatabase();
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         //create new tables.
         db.execSQL("Create table "+ TableGroup +" (NAME TEXT PRIMARY KEY AUTOINCREMENT , TITLE TEXT) ");
-    //    db.execSQL("Create table "+ TablePeople +" (ID INTEGER PRIMARY KEY , NAME TEXT) ");
         db.execSQL("Create table "+ TableTasks +" (BELONGS_TO_GROUP TEXT , DATA TEXT, COUNT INTEGER PRIMARY KEY AUTOINCREMENT) ");
         System.out.println("created clean database");
      }
@@ -88,24 +72,9 @@ public class DataBaseHelper extends SQLiteOpenHelper
             return false;
         }
 
-
-
-
         //add the new group.
         contentValues.put(gTcol2, title);
         long result = db.insert(TableGroup , null,contentValues );
-
-       /*
-        //test
-        String countQuery2 = ( "select count(*) from "+TableGroup  + "; " );
-        mcursor = db.rawQuery(countQuery2, null);
-        mcursor.moveToFirst();
-        int countOfCurrentTitle2 = mcursor.getInt(0);
-        System.out.println("count of groups:" + countOfCurrentTitle2);
-
-
-        //until here
-*/
 
         if (result== -1)
             return false;
@@ -140,21 +109,6 @@ public class DataBaseHelper extends SQLiteOpenHelper
         contentValues.put(tTcol2, data);
         long result = db.insert(TableTasks , null,contentValues );
 
-
-        /*
-        //test
-        String countQuery23 = ( "select count(*) from "+TableTasks  + "; " );
-        Cursor mcursor32 = db.rawQuery(countQuery23, null);
-        mcursor32.moveToFirst();
-        int countOfCurrentTitle23 = mcursor32.getInt(0);
-        System.out.println("count of tasks:" + countOfCurrentTitle23);
-
-       /// deleteAllTasks();
-
-        //until here
-*/
-
-
         if (result== -1)
             return false;
         else
@@ -166,14 +120,11 @@ public class DataBaseHelper extends SQLiteOpenHelper
     {
         System.out.println(title +" to be deleted");
         SQLiteDatabase db = this.getWritableDatabase();
-       // db.execSQL("DELETE FROM " + TableGroup + "WHERE " + gTcol2 + "='"+ title +"';"   );
-        // + "WHERE" + gTcol2 + "=\'"+ title +"\';"
 
         if (db.delete(TableGroup, "TITLE = ?", new String[] {title})>0)
             return true;
         return false;
     }
-
 
 
     public boolean deleteAllGroups()
