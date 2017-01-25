@@ -126,7 +126,7 @@ public class tasks extends AppCompatActivity
                 if (isInserted == true)
                 {
                     Toast.makeText(tasks.this, "New task inserted successfully", Toast.LENGTH_LONG).show();
-        //            finish();
+                    refreshActivity();
                 }
                 else
                 {
@@ -222,8 +222,40 @@ public class tasks extends AppCompatActivity
                 button.setText(res.getString(1));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
+                    public void onClick(View view)
+                    {
                         System.out.println(str);
+
+                        AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
+                        alert_builder.setMessage("Do you realy want to delete " + str)
+                                .setCancelable(false)
+                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        dialogInterface.cancel();
+                                    }
+                                })
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i)
+                                    {
+                                        boolean isDeleted = myDb.deleteOneTask(nameOfGroup, str);
+                                        if (isDeleted == true)
+                                        {
+                                            System.out.println(str + "was deleted");
+                                            refreshActivity();
+                                        }
+                                        else
+                                        {
+                                            System.out.println(str + "was not deleted");
+
+                                        }
+                                     //   finish();
+                                    }
+                                });
+                        AlertDialog alert = alert_builder.create();
+                        alert.setTitle("");
+                        alert.show();
                     }
                 });
                 tableRow.addView(button);
@@ -233,6 +265,11 @@ public class tasks extends AppCompatActivity
     }
 
 
-
+    public void refreshActivity()
+    {
+        Intent intent = getIntent();
+        finish();
+        startActivity(intent);
+    }
 
 }

@@ -211,6 +211,15 @@ public class DataBaseHelper extends SQLiteOpenHelper
     }
 
 
+    public boolean deleteOneTask(String group, String data)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TableTasks + "  where BELONGS_TO_GROUP='" + group + "' and DATA='" + data + "'; " );
+
+        return true;
+    }
+
+
     public Cursor getGroups()
     {
         SQLiteDatabase db = this.getWritableDatabase();
