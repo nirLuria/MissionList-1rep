@@ -6,16 +6,22 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class tasks extends AppCompatActivity
@@ -27,7 +33,11 @@ public class tasks extends AppCompatActivity
     List<String> tasksArray = new ArrayList<String>();
     private static ListView listView;
     private static Button delete_tasks_button;
-
+    String[] items;
+    ArrayList<String> listItems;
+    ArrayAdapter<String> adapter;
+    ListView newListView;
+    EditText editText;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +54,7 @@ public class tasks extends AppCompatActivity
         addNewTask();
         tasksView();
         deleteTasksOfGroupClickListener();
-    }
+     }
 
 
 
@@ -76,13 +86,12 @@ public class tasks extends AppCompatActivity
                                 } else {
                                     Toast.makeText(tasks.this, "didn't deleted", Toast.LENGTH_LONG).show();
                                 }
-                                finish();
+                              //  finish();
                             }
                         });
                 AlertDialog alert = alert_builder.create();
                 alert.setTitle("Delete all?");
                 alert.show();
-
             }
         });
     }
@@ -189,19 +198,41 @@ public class tasks extends AppCompatActivity
             StringBuffer buffer = new StringBuffer();
             int number=1;
 
+            TableLayout table = (TableLayout)findViewById(R.id.table_for_buttons);
+
+
             //  ###print to screen the database data.        ###
             while (res.moveToNext())
             {
-                buffer.append(number+". " + res.getString(1) + "\n");
-                System.out.println(res.getString(1));
-                tasksArray.add(res.getString(1));
+                final String str=res.getString(1);
+                buffer.append(number+". " + str + "\n");
+                System.out.println(str);
+                tasksArray.add(str);
                 number++;
+
+                //create button for every task.
+                TableRow tableRow = new TableRow(this);
+                tableRow.setLayoutParams(new TableLayout.LayoutParams(
+                        TableLayout.LayoutParams.MATCH_PARENT,
+                        TableLayout.LayoutParams.MATCH_PARENT,
+                        1.0f
+                ));
+                table.addView(tableRow);
+                Button button= new Button(this);
+                button.setText(res.getString(1));
+                button.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.println(str);
+                    }
+                });
+                tableRow.addView(button);
             }
-
-
-            showMessage("My currently tasks:", buffer.toString());
+        //    showMessage("My currently tasks:", buffer.toString());
         }
-
     }
+
+
+
 
 }
