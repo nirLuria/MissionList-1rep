@@ -116,17 +116,6 @@ public class DataBaseHelper extends SQLiteOpenHelper
     }
 
 
-    public boolean deleteList(String title)
-    {
-        System.out.println(title +" to be deleted");
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        if (db.delete(TableGroup, "TITLE = ?", new String[] {title})>0)
-            return true;
-        return false;
-    }
-
-
     public boolean deleteAllGroups()
     {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -160,6 +149,18 @@ public class DataBaseHelper extends SQLiteOpenHelper
 
         return true;
     }
+
+
+    public boolean deleteOneGroup(String group)
+    {
+        deleteAllTasksOfGroup(group);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + TableGroup + "  where TITLE='" + group + "'; " );
+
+        return true;
+    }
+
 
 
     public boolean deleteOneTask(String group, String data)
