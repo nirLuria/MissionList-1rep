@@ -26,5 +26,16 @@
         android:id="@+id/Delete_all_groupsBtn"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/listView"
-        android:layout_alignEnd="@+id/listView" />
+        android:layout_alignEnd="@+id/listView"
+        android:width="@dimen/abc_action_bar_progress_bar_size"
+        android:visibility="visible"
+        android:typeface="normal"
+        android:translationZ="@dimen/abc_action_bar_content_inset_material"
+        android:theme="@style/AppTheme.NoActionBar"
+        android:textSize="@dimen/abc_edit_text_inset_bottom_material"
+        android:textColorLink="#d70c0c"
+        android:textColor="#f5f090"
+        android:textColorHighlight="#7b85c1"
+        android:textColorHint="#c17979"
+        android:background="#930909" />
 </RelativeLayout>

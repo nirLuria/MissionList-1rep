@@ -5,7 +5,7 @@
         android:id="@+id/info_id"
         android:title="Info"
         android:icon="@drawable/info_icon"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_settings"
         android:title="Settings"

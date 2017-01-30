@@ -2,6 +2,8 @@ package com.example.nluria.missionlist;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -31,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         ab.setDisplayUseLogoEnabled(true);           //     <- option bar.
         ab.setDisplayHomeAsUpEnabled(true);          //
         ab.setDisplayShowHomeEnabled(true);          //
+        ab.setTitle("ToDo");
+        ab.setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
 
         //execute methods.
         exitButtonClickListener();
