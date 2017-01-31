@@ -27,7 +27,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="        Create a new Group        "
+        android:text="@string/create_a_new_group"
         android:id="@+id/New_ListButton"
         android:textColor="#ffffff"
         android:background="#000000"

@@ -36,16 +36,12 @@ public class newList extends AppCompatActivity {
                 {
                     public void onClick(View v)
                     {
-                        boolean isInserted = myDb.insertNewList(title.getText().toString());
-                        System.out.println(" isInserted is: " + isInserted);
+                        //empty title.
+                        System.out.println("is"+title.getText().toString()+"me");
+                        if (title.getText().toString().equals(""))
+                        {
+                            System.out.println("is"+title.getText().toString()+"be");
 
-                        if (isInserted == true)
-                        {
-                            Toast.makeText(newList.this, "New list inserted successfully", Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                        else
-                        {
                             AlertDialog.Builder alert_builder = new AlertDialog.Builder(newList.this);
                             alert_builder.setMessage("Please choose another name.")
                                     .setCancelable(false)
@@ -56,10 +52,37 @@ public class newList extends AppCompatActivity {
                                         }
                                     });
                             AlertDialog alert = alert_builder.create();
-                            alert.setTitle("This title name is already exists!");
+                            alert.setTitle("The title name can't be blank!");
                             alert.show();
-
                         }
+                        else
+                        {
+                            boolean isInserted = myDb.insertNewList(title.getText().toString());
+                            System.out.println(" isInserted is: " + isInserted);
+
+                            if (isInserted == true)
+                            {
+                                Toast.makeText(newList.this, "New list inserted successfully", Toast.LENGTH_LONG).show();
+                                finish();
+                            }
+                            else
+                            {
+                                AlertDialog.Builder alert_builder = new AlertDialog.Builder(newList.this);
+                                alert_builder.setMessage("Please choose another name.")
+                                        .setCancelable(false)
+                                        .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+                                                dialogInterface.cancel();
+                                            }
+                                        });
+                                AlertDialog alert = alert_builder.create();
+                                alert.setTitle("This title name is already exists!");
+                                alert.show();
+
+                            }
+                        }
+
                     }
                 }
         );
