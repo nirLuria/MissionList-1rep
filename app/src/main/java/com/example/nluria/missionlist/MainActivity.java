@@ -3,6 +3,7 @@ package com.example.nluria.missionlist;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private static Button exit_button;
     private static Button view_groups_button;
     private static Button new_list_button;
+    Typeface buttonFont;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -35,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
         ab.setDisplayShowHomeEnabled(true);          //
         ab.setTitle("ToDo");
         ab.setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
+
+
+        buttonFont= Typeface.createFromAsset(getAssets(), "tamir.ttf");
 
         //execute methods.
         exitButtonClickListener();
@@ -73,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
     {
 
         exit_button = (Button)findViewById(R.id.exitBotton);
+        exit_button.setTypeface(buttonFont);
         exit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -112,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
     public void newGroupClickListener()
     {
         new_list_button= (Button)findViewById(R.id.New_ListButton);
+        new_list_button.setTypeface(buttonFont);
         new_list_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -126,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
     public void viewGroupsClickListener()
     {
         view_groups_button = (Button)findViewById(R.id.newViewGroupsButton);
+        view_groups_button.setTypeface(buttonFont);
         view_groups_button.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

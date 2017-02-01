@@ -80,7 +80,7 @@ public class viewGroups extends AppCompatActivity
                         final int p=position;
                         AlertDialog.Builder builder = new AlertDialog.Builder(viewGroups.this);
 
-                        builder.setTitle("Title");
+                        builder.setTitle("");
                         builder.setItems(new CharSequence[]
                                         {"Watch tasks", "Delete Group","Cancel"},
                                 new DialogInterface.OnClickListener()

@@ -2,8 +2,8 @@
     <string name="app_name">ToDo</string>
     <string name="title_activity_group_tasks_list">group_tasks_list</string>
     <string name="exit">יציאה</string>
-    <string name="view_my_groups">צפה בקבוצות שלי</string>
-    <string name="create_a_new_group">צור קבוצה חדשה</string>
-    <string name="add_a_group_title">תן כותרת לקבוצה</string>
+    <string name="view_my_groups">צפה ברשימות שלי</string>
+    <string name="create_a_new_group">צור רשימה חדשה</string>
+    <string name="add_a_group_title">תן כותרת לרשימה</string>
 
 </resources>
