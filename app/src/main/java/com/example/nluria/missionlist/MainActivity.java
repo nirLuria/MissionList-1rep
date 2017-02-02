@@ -23,6 +23,8 @@ public class MainActivity extends AppCompatActivity {
     private static Button view_groups_button;
     private static Button new_list_button;
     Typeface buttonFont;
+    Typeface alertDialogFont;
+
 
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         buttonFont= Typeface.createFromAsset(getAssets(), "tamir.ttf");
+        alertDialogFont= Typeface.createFromAsset(getAssets(), "dragon-webfont.ttf");
 
         //execute methods.
         exitButtonClickListener();
@@ -86,13 +89,13 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog.Builder alert_builder = new AlertDialog.Builder(MainActivity.this);
                 alert_builder.setMessage("Do you want to exit?")
                         .setCancelable(false)
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(" ", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 dialogInterface.dismiss();
                             }
                         })
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(" ", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 finish();
@@ -101,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
                 AlertDialog alert = alert_builder.create();
                 alert.setTitle("Exit?");
                 alert.show();
+                Button negButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
+                negButton.setBackgroundResource(R.drawable.v);
+                Button posButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
+                posButton.setBackgroundResource(R.drawable.x);
             }
         });
     }
