@@ -1,12 +1,14 @@
 package com.example.nluria.missionlist;
 
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class newList extends AppCompatActivity {
@@ -14,15 +16,21 @@ public class newList extends AppCompatActivity {
     DataBaseHelper myDb;
     EditText title;
     Button btnAddList;
-
+    Typeface buttonFont;
+    TextView giveTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_list);
         myDb = new DataBaseHelper(this);
+        buttonFont= Typeface.createFromAsset(getAssets(), "tamir.ttf");
+
 
         title = (EditText)findViewById(R.id.add_a_title);
+        title.setTypeface(buttonFont);
+        giveTitle= (TextView)findViewById(R.id.giveTitle);
+        giveTitle.setTypeface(buttonFont);
         btnAddList = (Button)findViewById(R.id.addNewListBtn);
         addNewList();
     }
