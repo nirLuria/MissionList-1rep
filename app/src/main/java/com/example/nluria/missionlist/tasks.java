@@ -6,17 +6,24 @@ import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.ScrollView;
+import android.widget.LinearLayout;
+
+
 
 public class tasks extends AppCompatActivity
 {
@@ -29,20 +36,24 @@ public class tasks extends AppCompatActivity
 
 
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tasks);
         myDb = new DataBaseHelper(this);
+
 
         //print title of group on screen.
         Intent intent = getIntent();
         nameOfGroup= intent.getStringExtra("name");
         TextView title= (TextView) findViewById(R.id.title);
         title.setText(nameOfGroup);
+    //    title.setTextSize(100);
 
         addNewTask();
         tasksView();
         deleteTasksOfGroupClickListener();
+
      }
 
 
@@ -53,31 +64,7 @@ public class tasks extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
-                AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
-                alert_builder.setMessage("Do you realy want to delete all tasks?")
-                        .setCancelable(false)
-                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                dialogInterface.cancel();
-                            }
-                        })
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                //delete all groups.
-                                boolean isDeleted = myDb.deleteAllTasksOfGroup(nameOfGroup);
-                                if (isDeleted == true) {
-                                    Toast.makeText(tasks.this, "Tasks of " + nameOfGroup + " have been deleted successfully", Toast.LENGTH_LONG).show();
-                                } else {
-                                    Toast.makeText(tasks.this, "didn't deleted", Toast.LENGTH_LONG).show();
-                                }
-                              //  finish();
-                            }
-                        });
-                AlertDialog alert = alert_builder.create();
-                alert.setTitle("Delete all?");
-                alert.show();
+                deleteAllTasksMessage();
             }
         });
     }
@@ -146,6 +133,31 @@ public class tasks extends AppCompatActivity
         builder.show();
     }
 
+
+    public void scrollView()
+    {
+
+        System.out.println(" scrollView!");
+
+
+        //create scroll view.
+        ScrollView sv = new ScrollView(this);
+        LinearLayout ll = new LinearLayout(this);
+        ll.setOrientation(LinearLayout.VERTICAL);
+        sv.addView(ll);
+        TextView tv = new TextView(this);
+        ll.addView(tv);
+
+        for(int i = 0; i < 20; i++) {
+            Button cb = new Button(this);
+            cb.setText("I'm dynamic!");
+            ll.addView(cb);
+        }
+        this.setContentView(sv);
+
+    }
+
+
     public void tasksView()
     {
         Cursor res = myDb.getTasks(nameOfGroup);
@@ -158,10 +170,26 @@ public class tasks extends AppCompatActivity
         else
         {
             System.out.println(" i have tasks!");
+         ///   //scrollView();
+
+            /*
+            //create scroll view.
+            ScrollView sv = new ScrollView(this);
+            LinearLayout home_linear = new LinearLayout(this);
+
+            LinearLayout ll = new LinearLayout(this);
+            ll.setOrientation(LinearLayout.VERTICAL);
+            sv.addView(ll);
+            TextView tv = new TextView(this);
+            ll.addView(tv);
+*/
+
+
             StringBuffer buffer = new StringBuffer();
             int number=1;
 
             TableLayout table = (TableLayout)findViewById(R.id.table_for_buttons);
+
 
             //  ###print to screen the database data.        ###
             while (res.moveToNext())
@@ -172,6 +200,7 @@ public class tasks extends AppCompatActivity
                 tasksArray.add(str);
                 number++;
 
+
                 //create button for every task.
                 TableRow tableRow = new TableRow(this);
                 tableRow.setLayoutParams(new TableLayout.LayoutParams(
@@ -180,48 +209,99 @@ public class tasks extends AppCompatActivity
                         1.0f
                 ));
                 table.addView(tableRow);
-                Button button= new Button(this);
+
+
+                Button button = new Button(this);
+            //    button.setText("I'm dynamic!");
+              //  ll.addView(button);
+
+
+               // Button button= new Button(this);
                 button.setText(res.getString(1));
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view)
                     {
-                        System.out.println(str);
+                        deleteTaskMessage(str);
+                    }
 
-                        AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
-                        alert_builder.setMessage("Do you realy want to delete " + str)
-                                .setCancelable(false)
-                                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        dialogInterface.cancel();
-                                    }
-                                })
-                                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i)
-                                    {
-                                        boolean isDeleted = myDb.deleteOneTask(nameOfGroup, str);
-                                        if (isDeleted == true)
-                                        {
-                                            System.out.println(str + "was deleted");
-                                            refreshActivity();
-                                        }
-                                        else
-                                        {
-                                            System.out.println(str + "was not deleted");
-                                        }
-                                     //   finish();
-                                    }
-                                });
-                        AlertDialog alert = alert_builder.create();
-                        alert.setTitle("");
-                        alert.show();
+
+                });
+               tableRow.addView(button);
+             }
+     //       this.setContentView(sv);
+        }
+    }
+
+
+    public void deleteAllTasksMessage()
+    {
+        AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
+        alert_builder.setMessage("Do you realy want to delete all tasks?")
+                .setCancelable(false)
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //delete all groups.
+                        boolean isDeleted = myDb.deleteAllTasksOfGroup(nameOfGroup);
+                        if (isDeleted == true)
+                        {
+                            Toast.makeText(tasks.this, "Tasks of " + nameOfGroup + " have been deleted successfully", Toast.LENGTH_LONG).show();
+                            refreshActivity();
+                        }
+                        else
+                        {
+                            Toast.makeText(tasks.this, "didn't deleted", Toast.LENGTH_LONG).show();
+                        }
+                        //  finish();
                     }
                 });
-                tableRow.addView(button);
-            }
-        }
+        AlertDialog alert = alert_builder.create();
+        alert.setTitle("Delete all?");
+        alert.show();
+
+    }
+
+
+    public void deleteTaskMessage(String str)
+    {
+        System.out.println(str);
+        final String s=str;
+        AlertDialog.Builder alert_builder = new AlertDialog.Builder(tasks.this);
+        alert_builder.setMessage("Do you realy want to delete " + str)
+                .setCancelable(false)
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                })
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i)
+                    {
+                        boolean isDeleted = myDb.deleteOneTask(nameOfGroup, s);
+                        if (isDeleted == true)
+                        {
+                            System.out.println(s + "was deleted");
+                            refreshActivity();
+                        }
+                        else
+                        {
+                            System.out.println(s + "was not deleted");
+                        }
+                        //   finish();
+                    }
+                });
+        AlertDialog alert = alert_builder.create();
+        alert.setTitle("");
+        alert.show();
     }
 
 

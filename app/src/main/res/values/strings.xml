@@ -5,5 +5,8 @@
     <string name="view_my_groups">צפה ברשימות שלי</string>
     <string name="create_a_new_group">צור רשימה חדשה</string>
     <string name="add_a_group_title">תן כותרת לרשימה:</string>
+    <string name="add">הוסף</string>
+    <string name="delete_all_groups">מחק הכל</string>
+    <string name="Do_you_want_to_exit">האם ברצונך לצאת?</string>
 
 </resources>

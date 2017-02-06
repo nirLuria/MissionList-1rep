@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alert_builder = new AlertDialog.Builder(MainActivity.this);
-                alert_builder.setMessage("Do you want to exit?")
+                alert_builder.setMessage(R.string.Do_you_want_to_exit)
                         .setCancelable(false)
                         .setNegativeButton(" ", new DialogInterface.OnClickListener() {
                             @Override
@@ -102,12 +102,12 @@ public class MainActivity extends AppCompatActivity {
                             }
                         });
                 AlertDialog alert = alert_builder.create();
-                alert.setTitle("Exit?");
+                alert.setTitle(getString(R.string.exit));
                 alert.show();
                 Button negButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE);
-                negButton.setBackgroundResource(R.drawable.v);
+                negButton.setBackgroundResource(R.drawable.x);
                 Button posButton = alert.getButton(DialogInterface.BUTTON_POSITIVE);
-                posButton.setBackgroundResource(R.drawable.x);
+                posButton.setBackgroundResource(R.drawable.v);
             }
         });
     }

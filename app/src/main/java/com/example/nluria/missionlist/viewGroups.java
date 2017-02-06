@@ -1,11 +1,10 @@
 package com.example.nluria.missionlist;
 
-import android.annotation.SuppressLint;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -27,6 +25,7 @@ public class viewGroups extends AppCompatActivity
     private static Button view_groups_button;
     private static Button delete_groups_button;
     DataBaseHelper myDb;
+    Typeface buttonFont;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +33,8 @@ public class viewGroups extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_groups);
         myDb = new DataBaseHelper(this);
+
+        buttonFont= Typeface.createFromAsset(getAssets(), "tamir.ttf");
 
         //execute methods.
         groupsView();
@@ -66,7 +67,8 @@ public class viewGroups extends AppCompatActivity
 
 
         listView = (ListView)findViewById(R.id.listView);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.list_of_groups, groupsArray );
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.list_view_style, groupsArray );
         listView.setAdapter(adapter);
 
         //go to tasks of group.
@@ -133,6 +135,7 @@ public class viewGroups extends AppCompatActivity
     {
 
         delete_groups_button = (Button)findViewById(R.id.Delete_all_groupsBtn);
+        delete_groups_button.setTypeface(buttonFont);
         delete_groups_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
