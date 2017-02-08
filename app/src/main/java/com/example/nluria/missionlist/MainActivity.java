@@ -14,7 +14,17 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
     Typeface alertDialogFont;
 
 
+    //firebase
+    private Button mFirebaseBtn;
+    private DatabaseReference mDatabase;
+    EditText firebaseName;
+    TextView mNameView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -51,6 +66,65 @@ public class MainActivity extends AppCompatActivity {
         viewGroupsClickListener();
 
         myDb = new DataBaseHelper(this);
+
+
+
+        /*
+        //read
+
+        //firebase.
+        firebaseName=(EditText)findViewById(R.id.add_name);
+        mFirebaseBtn= (Button)findViewById(R.id.firebase);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mFirebaseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                //create child.
+                //assign some value to the child object.
+
+
+                int i=1;
+                String name=firebaseName.getText().toString();
+                String email=i+"@com";
+
+                HashMap<String, String> dataMap = new HashMap<String, String>();
+                dataMap.put("Name", name);
+                dataMap.put("Email", email);
+
+                mDatabase.push().setValue(dataMap);
+
+
+                i++;
+            }
+        });
+
+
+        */
+
+
+        /*
+        //write
+
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Name");
+        mNameView = (TextView) findViewById(R.id.showMeName);
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot)
+            {
+               String name= dataSnapshot.getValue().toString();
+                mNameView.setText("Name : "+name);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+*/
+
     }
 
 
