@@ -52,7 +52,7 @@ public class tasks extends AppCompatActivity
 
         addNewTask();
         tasksView();
-        deleteTasksOfGroupClickListener();
+     //   deleteTasksOfGroupClickListener();
 
      }
 
@@ -172,12 +172,15 @@ public class tasks extends AppCompatActivity
             System.out.println(" i have tasks!");
          ///   //scrollView();
 
-            /*
+/*
             //create scroll view.
             ScrollView sv = new ScrollView(this);
             LinearLayout home_linear = new LinearLayout(this);
 
             LinearLayout ll = new LinearLayout(this);
+
+          //  ll.setLayoutParams(new ViewGroup.LayoutParams(180, 180));
+           // ll.addView(home_linear, new LinearLayout.LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
             ll.setOrientation(LinearLayout.VERTICAL);
             sv.addView(ll);
             TextView tv = new TextView(this);
@@ -213,7 +216,7 @@ public class tasks extends AppCompatActivity
 
                 Button button = new Button(this);
             //    button.setText("I'm dynamic!");
-              //  ll.addView(button);
+            //    ll.addView(button);
 
 
                // Button button= new Button(this);
@@ -227,7 +230,7 @@ public class tasks extends AppCompatActivity
 
 
                 });
-               tableRow.addView(button);
+                tableRow.addView(button);
              }
      //       this.setContentView(sv);
         }
